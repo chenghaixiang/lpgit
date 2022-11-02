@@ -1,0 +1,40 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+    gateway:
+      routes:
+        - id: test_route
+          uri: https://www.baidu.com/baidu?tn=monline_3_dg&ie=utf-8&wd=%E6%B5%B7%E6%8A%95%E7%8E%8B
+          predicates:
+            - Query=url,baidu
+
+#          路由有优先级的如果路径同级按配置文件的顺序路由
+        - id: product_route
+          uri: lb://LPmall-product
+          predicates:
+            - Path=/api/lpmallproduct/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+
+        - id: third_party_route
+          uri: lb://LPmall-third-party
+          predicates:
+            - Path=/api/third/**
+          filters:
+            - RewritePath=/api/third/?(?<segment>.*), /$\{segment}
+
+
+        - id: admin_route
+#          lb是负载均衡
+          uri: lb://renren-fast
+#          配置访问路径放行的规则
+          predicates:
+            - Path=/api/**
+#          解决前端访问地址替换，如localhost:80/api/a变成localhost:80/renren-fast/a
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /renren-fast/$\{segment}
+
