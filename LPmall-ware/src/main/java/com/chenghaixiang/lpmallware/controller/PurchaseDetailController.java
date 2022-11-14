@@ -32,7 +32,7 @@ public class PurchaseDetailController {
     private PurchaseDetailService purchaseDetailService;
 
     /**
-     * 列表
+     * 列表查询采购需求
      */
     @RequestMapping("/list")
     //@RequiresPermissions("lpmallware:purchasedetail:list")

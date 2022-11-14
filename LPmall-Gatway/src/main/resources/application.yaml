@@ -6,16 +6,30 @@ spring:
 
     gateway:
       routes:
-        - id: test_route
-          uri: https://www.baidu.com/baidu?tn=monline_3_dg&ie=utf-8&wd=%E6%B5%B7%E6%8A%95%E7%8E%8B
-          predicates:
-            - Query=url,baidu
+#        - id: test_route
+#          uri: https://www.baidu.com/baidu?tn=monline_3_dg&ie=utf-8&wd=%E6%B5%B7%E6%8A%95%E7%8E%8B
+#          predicates:
+#            - Query=url,baidu
 
 #          路由有优先级的如果路径同级按配置文件的顺序路由
         - id: product_route
           uri: lb://LPmall-product
           predicates:
             - Path=/api/lpmallproduct/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+        - id: member_route
+          uri: lb://LPmall-member
+          predicates:
+            - Path=/api/lpmallmember/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+
+        - id: ware_route
+          uri: lb://LPmall-ware
+          predicates:
+            - Path=/api/lpmallware/**
           filters:
             - RewritePath=/api/?(?<segment>.*), /$\{segment}
 
@@ -37,4 +51,10 @@ spring:
 #          解决前端访问地址替换，如localhost:80/api/a变成localhost:80/renren-fast/a
           filters:
             - RewritePath=/api/?(?<segment>.*), /renren-fast/$\{segment}
+
+
+        - id: lpmall_index
+          uri: lb://LPmall-product
+          predicates:
+            - Host=192.168.10.100
 

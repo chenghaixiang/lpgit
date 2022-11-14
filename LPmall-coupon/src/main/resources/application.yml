@@ -20,4 +20,4 @@ mybatis-plus:
       id-type: auto
 
 server:
-  port: 8001
+  port: 6060

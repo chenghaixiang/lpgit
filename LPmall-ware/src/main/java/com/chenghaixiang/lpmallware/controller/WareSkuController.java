@@ -1,9 +1,11 @@
 package com.chenghaixiang.lpmallware.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
+import com.chenghaixiang.lpmallware.Vo.SkuHasStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +34,16 @@ public class WareSkuController {
     private WareSkuService wareSkuService;
 
     /**
-     * 列表
+     * 查询sku是否有库存
+     */
+    @RequestMapping("/hasstock")
+    public R getSkuHasStock(@RequestBody List<Long> skuIds){
+        List<SkuHasStockVo> vos=wareSkuService.getSkuHasStock(skuIds);
+        return R.ok().put("data",vos);
+    }
+
+    /**
+     * 列表查询商品库存
      */
     @RequestMapping("/list")
     //@RequiresPermissions("lpmallware:waresku:list")

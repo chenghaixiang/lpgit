@@ -32,7 +32,7 @@ public class WareInfoController {
     private WareInfoService wareInfoService;
 
     /**
-     * 列表
+     * 列表仓库列表
      */
     @RequestMapping("/list")
     //@RequiresPermissions("lpmallware:wareinfo:list")

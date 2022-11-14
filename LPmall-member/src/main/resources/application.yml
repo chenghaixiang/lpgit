@@ -5,6 +5,11 @@ spring:
     url: jdbc:mysql://192.168.10.100:3306/LPmall_ums?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
   application:
     name: LPmall-member
 
@@ -15,4 +20,4 @@ mybatis-plus:
       id-type: auto
 
 server:
-  port: 9001
+  port: 7070

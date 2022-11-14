@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 
 
+import com.chenghaixiang.lpmallproduct.Vo.AttrGroupRelation;
+import com.chenghaixiang.lpmallproduct.Vo.AttrResVo;
+import com.chenghaixiang.lpmallproduct.Vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,15 +46,23 @@ public class AttrController {
     }
 
 
+    @RequestMapping("/{attrType}/list/{catelogId}")
+    //@RequiresPermissions("lpmallproduct:attr:list")
+    public R baselist(@RequestParam Map<String, Object> params,@PathVariable("catelogId") Long catelogId,
+                      @PathVariable("attrType") String type){
+        PageUtils page =attrService.queryBaseAttrPage(params,catelogId,type);
+        return R.ok().put("page", page);
+    }
+
     /**
      * 信息
      */
     @RequestMapping("/info/{attrId}")
     //@RequiresPermissions("lpmallproduct:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+        AttrResVo attrResVo=attrService.getAttrInfo(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", attrResVo);
     }
 
     /**
@@ -59,8 +70,8 @@ public class AttrController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("lpmallproduct:attr:save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public R save(@RequestBody AttrVo attr){
+		attrService.saveAttr(attr);
 
         return R.ok();
     }
@@ -70,9 +81,8 @@ public class AttrController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("lpmallproduct:attr:update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
-
+    public R update(@RequestBody AttrVo attr){
+		attrService.updateAttr(attr);
         return R.ok();
     }
 
@@ -86,5 +96,6 @@ public class AttrController {
 
         return R.ok();
     }
+
 
 }

@@ -20,6 +20,8 @@
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>common</module>
+        <module>LPmall-third-party</module>
+        <module>LPmall-search</module>
     </modules>
 
 </project>

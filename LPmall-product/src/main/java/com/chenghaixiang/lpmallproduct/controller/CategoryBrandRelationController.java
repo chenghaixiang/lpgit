@@ -1,9 +1,14 @@
 package com.chenghaixiang.lpmallproduct.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chenghaixiang.lpmallproduct.Vo.BrandVo;
+import com.chenghaixiang.lpmallproduct.entity.BrandEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +47,32 @@ public class CategoryBrandRelationController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 获取当前品牌关联的所有分类
+     * @param brandId
+     * @return
+     */
+    @RequestMapping("/catelog/list")
+    //@RequiresPermissions("lpmallproduct:categorybrandrelation:list")
+    public R cateloglist(@RequestParam("brandId") Long brandId){
+        List<CategoryBrandRelationEntity> data = categoryBrandRelationService.list(
+                new QueryWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId));
+
+        return R.ok().put("data", data);
+    }
+
+    @RequestMapping("/brands/list")
+    //@RequiresPermissions("lpmallproduct:categorybrandrelation:list")
+    public R relationBrandlist(@RequestParam("catId") Long catId){
+        List<BrandEntity> vos=categoryBrandRelationService.getBrandsBycatId(catId);
+        List<BrandVo> collect = vos.stream().map(item -> {
+            BrandVo brandVo = new BrandVo();
+            brandVo.setBrandId(item.getBrandId());
+            brandVo.setBrandName(item.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+        return R.ok().put("data", collect);
+    }
 
     /**
      * 信息
@@ -60,8 +91,7 @@ public class CategoryBrandRelationController {
     @RequestMapping("/save")
     //@RequiresPermissions("lpmallproduct:categorybrandrelation:save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
-
+		categoryBrandRelationService.saveDetail(categoryBrandRelation);
         return R.ok();
     }
 
@@ -72,7 +102,6 @@ public class CategoryBrandRelationController {
     //@RequiresPermissions("lpmallproduct:categorybrandrelation:update")
     public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
 		categoryBrandRelationService.updateById(categoryBrandRelation);
-
         return R.ok();
     }
 

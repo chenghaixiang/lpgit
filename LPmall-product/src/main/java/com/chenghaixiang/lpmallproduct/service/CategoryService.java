@@ -2,6 +2,7 @@ package com.chenghaixiang.lpmallproduct.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chenghaixiang.common.utils.PageUtils;
+import com.chenghaixiang.lpmallproduct.Vo.Catelog2Vo;
 import com.chenghaixiang.lpmallproduct.entity.CategoryEntity;
 
 import java.util.List;
@@ -25,5 +26,11 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     // 根据id返回在树形菜单中的路径
     Long[] findCatelogPath(Long catelogId);
+
+    void updateCascade(CategoryEntity category);
+
+    List<CategoryEntity> getLevelOneCategorys();
+
+    Map<Long, List<Catelog2Vo>> getCatalogJson();
 }
 

@@ -2,8 +2,10 @@ package com.chenghaixiang.lpmallproduct.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chenghaixiang.common.utils.PageUtils;
+import com.chenghaixiang.lpmallproduct.Vo.AttrGroupRelation;
 import com.chenghaixiang.lpmallproduct.entity.AttrAttrgroupRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveBatch(List<AttrGroupRelation> vos);
 }
 

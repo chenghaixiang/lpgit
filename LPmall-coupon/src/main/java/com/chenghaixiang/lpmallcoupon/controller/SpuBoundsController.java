@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 
+import com.chenghaixiang.common.to.SkuReductionTo;
+import com.chenghaixiang.lpmallcoupon.service.SkuFullReductionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,7 @@ import com.chenghaixiang.common.utils.R;
 public class SpuBoundsController {
     @Autowired
     private SpuBoundsService spuBoundsService;
+
 
     /**
      * 列表
@@ -64,6 +67,8 @@ public class SpuBoundsController {
 
         return R.ok();
     }
+
+
 
     /**
      * 修改

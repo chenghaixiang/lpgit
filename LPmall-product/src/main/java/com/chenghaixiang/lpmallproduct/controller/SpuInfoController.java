@@ -1,9 +1,11 @@
 package com.chenghaixiang.lpmallproduct.controller;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
 
+import com.chenghaixiang.lpmallproduct.Vo.JsonVo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,13 +34,20 @@ public class SpuInfoController {
     private SpuInfoService spuInfoService;
 
     /**
+     * 商品上架
+     */
+    @RequestMapping("/{spuId}/up")
+    public R supUp(@PathVariable Long spuId) throws IOException {
+        spuInfoService.up(spuId);
+        return R.ok();
+    }
+    /**
      * 列表
      */
     @RequestMapping("/list")
     //@RequiresPermissions("lpmallproduct:spuinfo:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuInfoService.queryPage(params);
-
+        PageUtils page =spuInfoService.queryPageByCondition(params);
         return R.ok().put("page", page);
     }
 
@@ -59,9 +68,8 @@ public class SpuInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("lpmallproduct:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
-
+    public R save(@RequestBody SpuSaveVo spuSaveVo){
+		spuInfoService.saveSpuInfo(spuSaveVo);
         return R.ok();
     }
 

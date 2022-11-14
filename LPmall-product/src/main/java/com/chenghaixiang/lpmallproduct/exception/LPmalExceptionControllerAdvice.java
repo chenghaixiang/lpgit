@@ -32,8 +32,8 @@ public class LPmalExceptionControllerAdvice {
         return R.error().put("data",error);
     }
 
-    @ExceptionHandler(value = Throwable.class)
-    public R handleException(Throwable throwable){
-        return R.error();
-    }
+//    @ExceptionHandler(value = Throwable.class)
+//    public R handleException(Throwable throwable){
+//        return R.error();
+//    }
 }
